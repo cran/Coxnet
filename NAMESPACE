@@ -1,0 +1,6 @@
+useDynLib(Coxnet)
+import(Matrix)
+importFrom(Rcpp, evalCpp)
+
+export(Coxnet, print.Coxnet, coxsplit)
+S3method(print, Coxnet)

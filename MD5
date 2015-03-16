@@ -1,0 +1,16 @@
+640b5f1b68e20a6aec0642ffa12eb277 *DESCRIPTION
+30a64060a2aea0b24ca9e2f12480a260 *NAMESPACE
+7be568675c98b1990019f0308136fa0e *R/Coxnet.R
+801482527ef416e89685c6cfc6ca34b0 *R/RcppExports.R
+ca0d3444cbf360057a6a6c15cfed8076 *R/coxini.R
+2f09f18f5567f805fe66af8c45e7ea27 *R/coxprep.R
+8f4c1d718d2742e799bf9b94625338ef *R/coxsplit.R
+5a69d1e57dcf9d6ccb51a9f9eb3e0809 *R/print.Coxnet.R
+af501ead70399056e3279f9952155d41 *inst/include/Coxnet.h
+b0f167deb401f0fa526f3783a3e624a3 *inst/include/Coxnet_RcppExports.h
+502d064c6367c1c6562ddbb6d07b0d50 *man/Coxnet-package.Rd
+2dcfe4ec47024c945ebe31ab25ef1dec *man/Coxnet.Rd
+a886e45398305b523c685b7b8f220d62 *man/coxsplit.Rd
+74c5e4a923b4ee7a8f439cc5d9f95e8c *man/print.Coxnet.Rd
+b6e103901287ae4e1ba2d5320739a0d8 *src/Coxnet.cpp
+39f8b3017461be813aca5af77587c563 *src/RcppExports.cpp
