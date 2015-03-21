@@ -6,19 +6,17 @@ Split Data for Cross-validation
 \description{
 Specify which fold each observation is in to obtain \code{foldid}.
 
-\code{coxsplit} splits data stratified by 'status' of \code{y}. and also based on the 'time' of \code{y}.
-
-\code{split.foldid} splits data stratified by 'status' of \code{y} and within each 'status' randomly divides them.
+\code{coxsplit} splits data by the `status' or/and `time' of \code{y}.
 }
 \usage{
 coxsplit(y, nfolds, seeds = NULL)
 }
 \arguments{
-  \item{y}{response variable. \code{y} should be a two-column matrix with columns named 'time' and 'status'. The latter is a binary variable, with '1' indicating death, and '0' indicating right censored.
+  \item{y}{response variable. \code{y} should be a two-column matrix with columns named `time' and `status'. The latter is a binary variable, with `1' indicating death, and `0' indicating right censored.
 }
   \item{nfolds}{number of folds.
 }
-  \item{seeds}{seeds for random split within each 'status' of \code{y}. Default is \code{NULL}. For \code{seeds=NULL}, the split is performed based on the 'time' of \code{y}. If \code{seeds} is supplied by user, data is randomly dividied within eath 'status' of \code{y}.
+  \item{seeds}{seeds for random split within each `status' of \code{y}. Default is \code{NULL}. For \code{seeds=NULL}, the split is performed based on the `time' of \code{y}. If \code{seeds} is supplied by user, data is randomly dividied within eath `status' of \code{y}.
 }
 }
 \details{

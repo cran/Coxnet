@@ -13,7 +13,7 @@ using namespace Rcpp;
 List scaleC(Eigen::MatrixXd X){
   Eigen::VectorXd mX=X.colwise().mean(), sdX(X.cols()), sdXi;
   X.rowwise()-=mX.transpose();
-  sdX=X.colwise().norm()/sqrt(X.rows());
+  sdX=X.colwise().norm()/sqrt((double)X.rows());
   sdXi=1.0/sdX.array();
   X=X*sdXi.asDiagonal();
   return List::create(Named("x")=X, Named("sd")=sdX);

@@ -9,7 +9,6 @@ Print a summary of results along the path of \code{lambda}.
 \usage{
 \method{print}{Coxnet}(x, digits = 4, ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{fitted Coxnet object
 }

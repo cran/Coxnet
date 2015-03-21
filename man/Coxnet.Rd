@@ -5,8 +5,8 @@ Fit a Cox Model with Various Regularization Forms
 }
 \description{
 Fit a Cox model regularized with net, elastic-net or lasso penalty.
-In addition, it efficiently solves an approximate L0 variable selection based on truncated likelihood function (L0-Trunc).
-Moreover, it can also handle the adaptive version of these regularization forms, such as adaptive lasso and net adjusting for signs of linked coefficients.
+In addition, it can truncate the estimate by a hard threshold, which is selected simultaneously with other tuning parameters.
+Moreover, it can handle the adaptive version of these regularization forms, such as adaptive lasso and net adjusting for signs of linked coefficients.
 The regularization path is automatically computed.
 }
 \usage{
@@ -19,7 +19,7 @@ Coxnet(x, y, Omega = NULL, penalty = c("Lasso","Enet", "Net"),
 \arguments{
   \item{x}{input matrix, each row is an observation vector.
 }
-  \item{y}{response variable. \code{y} should be a two-column matrix with columns named 'time' and 'status'. The latter is a binary variable, with '1' indicating death, and '0' indicating right censored.
+  \item{y}{response variable. \code{y} should be a two-column matrix with columns named `time' and `status'. The latter is a binary variable, with `1' indicating death, and `0' indicating right censored.
 }
   \item{Omega}{adjancy matrix with zero diagonal, used for \code{penalty = "Net"} to calculate Laplacian matrix.
 }
@@ -38,7 +38,7 @@ where \eqn{L} is a Laplacian matrix calculated from \code{Omega}. For \code{adap
 }
   \item{foldid}{an optional vector of values between 1 and \code{nfolds} specifying which fold each observation is in.
 }
-  \item{itrunc}{logical flag for approximate L0 based on truncated likelihood function. Default is \code{itrunc = TRUE}.
+  \item{itrunc}{logical flag for truncating the estimate by a hard threshold. Default is \code{itrunc = TRUE}.
 }
   \item{adaptive}{logical flags for adaptive version. Default is \code{adaptive = c(FALSE, TRUE)}. The first element is for adaptive on \eqn{\beta} in L1 and the second for adjusting for signs of linked coefficients in Laplacian matrix.
 }

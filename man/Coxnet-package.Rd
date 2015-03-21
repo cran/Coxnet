@@ -5,7 +5,7 @@
 Regularized Cox Model
 }
 \description{
-This package fits Cox model regularized with net (L1 and Laplacian), elastic-net (L1 and L2) or lasso (L1) penalty. In addition, it efficiently solves an approximate L0 variable selection based on truncated likelihood function. Moreover, it can also handle the adaptive version of these regularization forms, such as adaptive lasso and net adjusting for signs of linked coefficients.
+This package fits Cox model regularized with net (L1 and Laplacian), elastic-net (L1 and L2) or lasso (L1) penalty. In addition, it can truncate the estimate by a hard threshold, which is selected simultaneously with other tuning parameters. Moreover, it can handle the adaptive version of these regularization forms, such as adaptive lasso and net adjusting for signs of linked coefficients.
 
 The package uses one-step coordinate descent algorithm and runs extremely fast by taking into account the sparsity structure of coefficients.
 }
@@ -13,8 +13,8 @@ The package uses one-step coordinate descent algorithm and runs extremely fast b
 \tabular{ll}{
 Package: \tab Coxnet\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
-Date: \tab 2015-03-16\cr
+Version: \tab 0.1-1\cr
+Date: \tab 2015-03-21\cr
 License: \tab GPL (>= 2)\cr
 }
 Two functions:
