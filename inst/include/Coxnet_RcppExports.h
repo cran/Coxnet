@@ -44,6 +44,25 @@ namespace Coxnet {
         return Rcpp::as<List >(__result);
     }
 
+    inline double softC(double z, double lambda) {
+        typedef SEXP(*Ptr_softC)(SEXP,SEXP);
+        static Ptr_softC p_softC = NULL;
+        if (p_softC == NULL) {
+            validateSignature("double(*softC)(double,double)");
+            p_softC = (Ptr_softC)R_GetCCallable("Coxnet", "Coxnet_softC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_softC(Rcpp::wrap(z), Rcpp::wrap(lambda));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
     inline List OmegaC(Eigen::MatrixXd& Omega, Eigen::VectorXi& sgn) {
         typedef SEXP(*Ptr_OmegaC)(SEXP,SEXP);
         static Ptr_OmegaC p_OmegaC = NULL;
@@ -207,6 +226,177 @@ namespace Coxnet {
         {
             RNGScope __rngScope;
             __result = p_cvcoxnetC(Rcpp::wrap(X), Rcpp::wrap(tevent), Rcpp::wrap(alpha), Rcpp::wrap(lambda), Rcpp::wrap(nlambda), Rcpp::wrap(wbeta), Rcpp::wrap(Omega), Rcpp::wrap(loc), Rcpp::wrap(nadj), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n), Rcpp::wrap(p), Rcpp::wrap(N0), Rcpp::wrap(thresh), Rcpp::wrap(maxit), Rcpp::wrap(ifast), Rcpp::wrap(XF), Rcpp::wrap(NF), Rcpp::wrap(neventF), Rcpp::wrap(nevent1F), Rcpp::wrap(loc1F), Rcpp::wrap(nF));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<List >(__result);
+    }
+
+    inline double max_loclambdaC(Eigen::MatrixXd X, Eigen::VectorXd tevent, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, double alpha, Eigen::VectorXd wbeta, int N0) {
+        typedef SEXP(*Ptr_max_loclambdaC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_max_loclambdaC p_max_loclambdaC = NULL;
+        if (p_max_loclambdaC == NULL) {
+            validateSignature("double(*max_loclambdaC)(Eigen::MatrixXd,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,double,Eigen::VectorXd,int)");
+            p_max_loclambdaC = (Ptr_max_loclambdaC)R_GetCCallable("Coxnet", "Coxnet_max_loclambdaC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_max_loclambdaC(Rcpp::wrap(X), Rcpp::wrap(tevent), Rcpp::wrap(Kh), Rcpp::wrap(Kh1), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n), Rcpp::wrap(alpha), Rcpp::wrap(wbeta), Rcpp::wrap(N0));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline Eigen::MatrixXd alocletaC(Eigen::ArrayXd eta, Eigen::VectorXd tevent, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n) {
+        typedef SEXP(*Ptr_alocletaC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_alocletaC p_alocletaC = NULL;
+        if (p_alocletaC == NULL) {
+            validateSignature("Eigen::MatrixXd(*alocletaC)(Eigen::ArrayXd,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+            p_alocletaC = (Ptr_alocletaC)R_GetCCallable("Coxnet", "Coxnet_alocletaC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_alocletaC(Rcpp::wrap(eta), Rcpp::wrap(tevent), Rcpp::wrap(Kh), Rcpp::wrap(Kh1), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<Eigen::MatrixXd >(__result);
+    }
+
+    inline double locletaC(Eigen::ArrayXd eta, Eigen::VectorXd Kh, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n) {
+        typedef SEXP(*Ptr_locletaC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_locletaC p_locletaC = NULL;
+        if (p_locletaC == NULL) {
+            validateSignature("double(*locletaC)(Eigen::ArrayXd,Eigen::VectorXd,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+            p_locletaC = (Ptr_locletaC)R_GetCCallable("Coxnet", "Coxnet_locletaC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_locletaC(Rcpp::wrap(eta), Rcpp::wrap(Kh), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline double loceobjF(Eigen::VectorXd beta, Eigen::ArrayXd eta, Eigen::VectorXd lambda1, double lambda2, Eigen::VectorXd Kh, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int N0) {
+        typedef SEXP(*Ptr_loceobjF)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_loceobjF p_loceobjF = NULL;
+        if (p_loceobjF == NULL) {
+            validateSignature("double(*loceobjF)(Eigen::VectorXd,Eigen::ArrayXd,Eigen::VectorXd,double,Eigen::VectorXd,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int)");
+            p_loceobjF = (Ptr_loceobjF)R_GetCCallable("Coxnet", "Coxnet_loceobjF");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_loceobjF(Rcpp::wrap(beta), Rcpp::wrap(eta), Rcpp::wrap(lambda1), Rcpp::wrap(lambda2), Rcpp::wrap(Kh), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n), Rcpp::wrap(N0));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline double loclbetaC(Eigen::VectorXd beta, Eigen::MatrixXd X, Eigen::VectorXd Kh, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n) {
+        typedef SEXP(*Ptr_loclbetaC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_loclbetaC p_loclbetaC = NULL;
+        if (p_loclbetaC == NULL) {
+            validateSignature("double(*loclbetaC)(Eigen::VectorXd,Eigen::MatrixXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+            p_loclbetaC = (Ptr_loclbetaC)R_GetCCallable("Coxnet", "Coxnet_loclbetaC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_loclbetaC(Rcpp::wrap(beta), Rcpp::wrap(X), Rcpp::wrap(Kh), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<double >(__result);
+    }
+
+    inline List locoxenetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit) {
+        typedef SEXP(*Ptr_locoxenetC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_locoxenetC p_locoxenetC = NULL;
+        if (p_locoxenetC == NULL) {
+            validateSignature("List(*locoxenetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int)");
+            p_locoxenetC = (Ptr_locoxenetC)R_GetCCallable("Coxnet", "Coxnet_locoxenetC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_locoxenetC(Rcpp::wrap(X), Rcpp::wrap(tevent), Rcpp::wrap(alpha), Rcpp::wrap(lambda), Rcpp::wrap(nlambda), Rcpp::wrap(wbeta), Rcpp::wrap(Kh), Rcpp::wrap(Kh1), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n), Rcpp::wrap(p), Rcpp::wrap(N0), Rcpp::wrap(thresh), Rcpp::wrap(thresh2), Rcpp::wrap(maxit));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<List >(__result);
+    }
+
+    inline List cvlocoxenetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit, Eigen::MatrixXd XF, Eigen::VectorXd KhF, int NF, Eigen::VectorXi neventF, Eigen::VectorXi nevent1F, Eigen::VectorXi loc1F, int nF) {
+        typedef SEXP(*Ptr_cvlocoxenetC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_cvlocoxenetC p_cvlocoxenetC = NULL;
+        if (p_cvlocoxenetC == NULL) {
+            validateSignature("List(*cvlocoxenetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int,Eigen::MatrixXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+            p_cvlocoxenetC = (Ptr_cvlocoxenetC)R_GetCCallable("Coxnet", "Coxnet_cvlocoxenetC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_cvlocoxenetC(Rcpp::wrap(X), Rcpp::wrap(tevent), Rcpp::wrap(alpha), Rcpp::wrap(lambda), Rcpp::wrap(nlambda), Rcpp::wrap(wbeta), Rcpp::wrap(Kh), Rcpp::wrap(Kh1), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n), Rcpp::wrap(p), Rcpp::wrap(N0), Rcpp::wrap(thresh), Rcpp::wrap(thresh2), Rcpp::wrap(maxit), Rcpp::wrap(XF), Rcpp::wrap(KhF), Rcpp::wrap(NF), Rcpp::wrap(neventF), Rcpp::wrap(nevent1F), Rcpp::wrap(loc1F), Rcpp::wrap(nF));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<List >(__result);
+    }
+
+    inline List locoxnetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::MatrixXd L, Eigen::MatrixXd Omega, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit) {
+        typedef SEXP(*Ptr_locoxnetC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_locoxnetC p_locoxnetC = NULL;
+        if (p_locoxnetC == NULL) {
+            validateSignature("List(*locoxnetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::MatrixXd,Eigen::MatrixXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int)");
+            p_locoxnetC = (Ptr_locoxnetC)R_GetCCallable("Coxnet", "Coxnet_locoxnetC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_locoxnetC(Rcpp::wrap(X), Rcpp::wrap(tevent), Rcpp::wrap(alpha), Rcpp::wrap(lambda), Rcpp::wrap(nlambda), Rcpp::wrap(wbeta), Rcpp::wrap(L), Rcpp::wrap(Omega), Rcpp::wrap(Kh), Rcpp::wrap(Kh1), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n), Rcpp::wrap(p), Rcpp::wrap(N0), Rcpp::wrap(thresh), Rcpp::wrap(thresh2), Rcpp::wrap(maxit));
+        }
+        if (__result.inherits("interrupted-error"))
+            throw Rcpp::internal::InterruptedException();
+        if (__result.inherits("try-error"))
+            throw Rcpp::exception(as<std::string>(__result).c_str());
+        return Rcpp::as<List >(__result);
+    }
+
+    inline List cvlocoxnetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::MatrixXd L, Eigen::MatrixXd Omega, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit, Eigen::MatrixXd XF, Eigen::VectorXd KhF, int NF, Eigen::VectorXi neventF, Eigen::VectorXi nevent1F, Eigen::VectorXi loc1F, int nF) {
+        typedef SEXP(*Ptr_cvlocoxnetC)(SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP,SEXP);
+        static Ptr_cvlocoxnetC p_cvlocoxnetC = NULL;
+        if (p_cvlocoxnetC == NULL) {
+            validateSignature("List(*cvlocoxnetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::MatrixXd,Eigen::MatrixXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int,Eigen::MatrixXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+            p_cvlocoxnetC = (Ptr_cvlocoxnetC)R_GetCCallable("Coxnet", "Coxnet_cvlocoxnetC");
+        }
+        RObject __result;
+        {
+            RNGScope __rngScope;
+            __result = p_cvlocoxnetC(Rcpp::wrap(X), Rcpp::wrap(tevent), Rcpp::wrap(alpha), Rcpp::wrap(lambda), Rcpp::wrap(nlambda), Rcpp::wrap(wbeta), Rcpp::wrap(L), Rcpp::wrap(Omega), Rcpp::wrap(Kh), Rcpp::wrap(Kh1), Rcpp::wrap(N), Rcpp::wrap(nevent), Rcpp::wrap(nevent1), Rcpp::wrap(loc1), Rcpp::wrap(n), Rcpp::wrap(p), Rcpp::wrap(N0), Rcpp::wrap(thresh), Rcpp::wrap(thresh2), Rcpp::wrap(maxit), Rcpp::wrap(XF), Rcpp::wrap(KhF), Rcpp::wrap(NF), Rcpp::wrap(neventF), Rcpp::wrap(nevent1F), Rcpp::wrap(loc1F), Rcpp::wrap(nF));
         }
         if (__result.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();

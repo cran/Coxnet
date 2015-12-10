@@ -5,6 +5,10 @@ scaleC <- function(X) {
     .Call('Coxnet_scaleC', PACKAGE = 'Coxnet', X)
 }
 
+softC <- function(z, lambda) {
+    .Call('Coxnet_softC', PACKAGE = 'Coxnet', z, lambda)
+}
+
 OmegaC <- function(Omega, sgn) {
     .Call('Coxnet_OmegaC', PACKAGE = 'Coxnet', Omega, sgn)
 }
@@ -39,6 +43,42 @@ coxnetC <- function(X, tevent, alpha, lambda, nlambda, wbeta, Omega, loc, nadj, 
 
 cvcoxnetC <- function(X, tevent, alpha, lambda, nlambda, wbeta, Omega, loc, nadj, N, nevent, nevent1, loc1, n, p, N0, thresh, maxit, ifast, XF, NF, neventF, nevent1F, loc1F, nF) {
     .Call('Coxnet_cvcoxnetC', PACKAGE = 'Coxnet', X, tevent, alpha, lambda, nlambda, wbeta, Omega, loc, nadj, N, nevent, nevent1, loc1, n, p, N0, thresh, maxit, ifast, XF, NF, neventF, nevent1F, loc1F, nF)
+}
+
+max_loclambdaC <- function(X, tevent, Kh, Kh1, N, nevent, nevent1, loc1, n, alpha, wbeta, N0) {
+    .Call('Coxnet_max_loclambdaC', PACKAGE = 'Coxnet', X, tevent, Kh, Kh1, N, nevent, nevent1, loc1, n, alpha, wbeta, N0)
+}
+
+alocletaC <- function(eta, tevent, Kh, Kh1, N, nevent, nevent1, loc1, n) {
+    .Call('Coxnet_alocletaC', PACKAGE = 'Coxnet', eta, tevent, Kh, Kh1, N, nevent, nevent1, loc1, n)
+}
+
+locletaC <- function(eta, Kh, nevent, nevent1, loc1, n) {
+    .Call('Coxnet_locletaC', PACKAGE = 'Coxnet', eta, Kh, nevent, nevent1, loc1, n)
+}
+
+loceobjF <- function(beta, eta, lambda1, lambda2, Kh, nevent, nevent1, loc1, n, N0) {
+    .Call('Coxnet_loceobjF', PACKAGE = 'Coxnet', beta, eta, lambda1, lambda2, Kh, nevent, nevent1, loc1, n, N0)
+}
+
+loclbetaC <- function(beta, X, Kh, N, nevent, nevent1, loc1, n) {
+    .Call('Coxnet_loclbetaC', PACKAGE = 'Coxnet', beta, X, Kh, N, nevent, nevent1, loc1, n)
+}
+
+locoxenetC <- function(X, tevent, alpha, lambda, nlambda, wbeta, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit) {
+    .Call('Coxnet_locoxenetC', PACKAGE = 'Coxnet', X, tevent, alpha, lambda, nlambda, wbeta, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit)
+}
+
+cvlocoxenetC <- function(X, tevent, alpha, lambda, nlambda, wbeta, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit, XF, KhF, NF, neventF, nevent1F, loc1F, nF) {
+    .Call('Coxnet_cvlocoxenetC', PACKAGE = 'Coxnet', X, tevent, alpha, lambda, nlambda, wbeta, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit, XF, KhF, NF, neventF, nevent1F, loc1F, nF)
+}
+
+locoxnetC <- function(X, tevent, alpha, lambda, nlambda, wbeta, L, Omega, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit) {
+    .Call('Coxnet_locoxnetC', PACKAGE = 'Coxnet', X, tevent, alpha, lambda, nlambda, wbeta, L, Omega, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit)
+}
+
+cvlocoxnetC <- function(X, tevent, alpha, lambda, nlambda, wbeta, L, Omega, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit, XF, KhF, NF, neventF, nevent1F, loc1F, nF) {
+    .Call('Coxnet_cvlocoxnetC', PACKAGE = 'Coxnet', X, tevent, alpha, lambda, nlambda, wbeta, L, Omega, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit, XF, KhF, NF, neventF, nevent1F, loc1F, nF)
 }
 
 # Register entry points for exported C++ functions

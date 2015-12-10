@@ -12,7 +12,7 @@
 ##########################################################
 ###  lambda1*||_1+lambda2/2*||_2 <-> lambda*(alpha_1+(1-alpha)/2_2)
 
-Coxnet=function(x, y, Omega=NULL, penalty=c("Lasso","Enet", "Net"), alpha=1, lambda=NULL, nlambda=50, rlambda=NULL, nfolds=1, foldid=NULL, itrunc=TRUE, adaptive=c(FALSE,TRUE), aini=NULL, alambda=NULL, nalambda=10, isd=TRUE, ifast=TRUE, keep.beta=FALSE, thresh=1e-7, maxit=1e+5) {
+Coxnet=function(x, y, Omega=NULL, penalty=c("Lasso","Enet", "Net"), alpha=1, lambda=NULL, nlambda=50, rlambda=NULL, nfolds=1, foldid=NULL, inzero=TRUE, adaptive=c(FALSE,TRUE), aini=NULL, isd=FALSE, ifast=TRUE, keep.beta=FALSE, thresh=1e-6, maxit=1e+5) {
   
   #fcall=match.call()
   penalty=match.arg(penalty)
@@ -27,8 +27,8 @@ Coxnet=function(x, y, Omega=NULL, penalty=c("Lasso","Enet", "Net"), alpha=1, lam
   }
   
   fit=switch(penalty,
-             "Enet"=coxEnet(x,y,alpha,lambda,nlambda,rlambda,nfolds,foldid,itrunc,adaptive[1],aini,alambda,nalambda,isd,ifast,keep.beta,thresh,maxit),
-             "Net"=coxNet(x,y,Omega,alpha,lambda,nlambda,rlambda,nfolds,foldid,itrunc,adaptive,aini,alambda,nalambda,isd,ifast,keep.beta,thresh,maxit))
+             "Enet"=coxEnet(x,y,alpha,lambda,nlambda,rlambda,nfolds,foldid,inzero,adaptive[1],aini,isd,ifast,keep.beta,thresh,maxit),
+             "Net"=coxNet(x,y,Omega,alpha,lambda,nlambda,rlambda,nfolds,foldid,inzero,adaptive,aini,isd,ifast,keep.beta,thresh,maxit))
   
   #fit$call=fcall
   class(fit)="Coxnet"
@@ -41,7 +41,7 @@ Coxnet=function(x, y, Omega=NULL, penalty=c("Lasso","Enet", "Net"), alpha=1, lam
 #####  Enet (Lasso)  #####
 ##########################
 
-coxEnet=function(x, y, alpha=1, lambda=NULL, nlambda=100, rlambda=NULL, nfolds=1, foldid=NULL, itrunc=TRUE, adaptive=FALSE, aini=NULL, alambda=NULL, nalambda=10, isd=TRUE, ifast=TRUE, keep.beta=FALSE, thresh=1e-7, maxit=1e+5) {
+coxEnet=function(x, y, alpha=1, lambda=NULL, nlambda=100, rlambda=NULL, nfolds=1, foldid=NULL, itrunc=TRUE, adaptive=FALSE, aini=NULL, isd=FALSE, ifast=TRUE, keep.beta=FALSE, thresh=1e-7, maxit=1e+5) {
   
   penalty=ifelse(alpha==1,"Lasso","Enet")
   
@@ -49,20 +49,17 @@ coxEnet=function(x, y, alpha=1, lambda=NULL, nlambda=100, rlambda=NULL, nfolds=1
   ifast=as.integer(ifast)
   
   ### scaleC and standardized
-  xscale=rep(1, p)
-  if (isd) {
-    tem=scaleC(x)
-    xscale=tem$sd;x=tem$x
-    rm(tem)
-  }
+  tem=scaleC(x)
+  xscale=tem$sd;x=tem$x
+  rm(tem)
   
   ###  Full data  ###
   prep0=coxprep(x, y)
   
   ### Adaptive based on Ridge (L2)  
   if (adaptive) {
-    if (is.null(aini)) 
-      aini=coxini(x, y, alambda, nalambda, rlambda, isd)
+    if (is.null(aini))
+      aini=coxini(x, y)
     wbeta=aini$wbeta
     rm(aini)
   } else {
@@ -84,7 +81,8 @@ coxEnet=function(x, y, alpha=1, lambda=NULL, nlambda=100, rlambda=NULL, nfolds=1
   if (nlambdai==0)
     return(NULL)
   lambdai=lambda[1:nlambdai]
-  out$Beta=Matrix(out$Beta[, 1:nlambdai]/xscale, sparse=TRUE)
+  #out$Beta=Matrix(out$Beta[, 1:nlambdai]/xscale, sparse=TRUE)
+  if (!isd) out$Beta=matrix(out$Beta[, 1:nlambdai]/xscale, ncol=nlambdai)
   out$nzero=apply(out$Beta!=0, 2, sum)
   out$flag=out$flag[1:nlambdai]
   
@@ -125,15 +123,16 @@ coxEnet=function(x, y, alpha=1, lambda=NULL, nlambda=100, rlambda=NULL, nfolds=1
     indexi=which.max(cvm)
     indexij=which(cvm>=(cvm[indexi]-cvse[indexi]))[1]
     temi=rep("", nlambdai)
-    temi[indexi]="**";temi[indexij]=ifelse(temi[indexij]=="", "*", "***")
+    temi[indexi]="max"
+    #temi[indexi]="**";temi[indexij]=ifelse(temi[indexij]=="", "*", "***")
     temCV=data.frame(lambda=lambdai, cvm=cvm, cvse=cvse, nzero=out$nzero, index=temi,stringsAsFactors=FALSE)
     
     if (!itrunc) {
       rm(outi)
       if (!keep.beta) {
-        return(list(Beta=out$Beta[, c(indexij, indexi)], fit=temCV, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], penalty=penalty, adaptive=adaptive, flag=out$flag))
+        return(list(Beta=out$Beta[, indexi], fit=temCV, lambda.max=lambdai[indexi], penalty=penalty, adaptive=adaptive, flag=out$flag))
       } else {
-        return(list(Beta=out$Beta, fit=temCV, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], penalty=penalty, adaptive=adaptive, flag=out$flag))
+        return(list(Beta=out$Beta, fit=temCV, lambda.max=lambdai[indexi], penalty=penalty, adaptive=adaptive, flag=out$flag))
       }
     }
     
@@ -224,9 +223,9 @@ coxEnet=function(x, y, alpha=1, lambda=NULL, nlambda=100, rlambda=NULL, nfolds=1
     temCV0=data.frame(lambda=lambdai[index0],cvm=cv.max[index0],nzero=cuti)
     
     if (!keep.beta) {
-      return(list(Beta=out$Beta[, c(indexij, indexi)], Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
+      return(list(Beta=out$Beta[, indexi], Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
     } else {
-      return(list(Beta=out$Beta, Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
+      return(list(Beta=out$Beta, Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
     }
   }
 }
@@ -239,7 +238,7 @@ coxEnet=function(x, y, alpha=1, lambda=NULL, nlambda=100, rlambda=NULL, nfolds=1
 #####  Net  #####
 #################
 
-coxNet=function(x, y, Omega=NULL, alpha=1, lambda=NULL, nlambda=50, rlambda=NULL, nfolds=1, foldid=NULL, itrunc=TRUE, adaptive=c(FALSE,TRUE), aini=NULL, alambda=NULL, nalambda=10, isd=TRUE, ifast=TRUE, keep.beta=FALSE, thresh=1e-7, maxit=1e+5){
+coxNet=function(x, y, Omega=NULL, alpha=1, lambda=NULL, nlambda=50, rlambda=NULL, nfolds=1, foldid=NULL, itrunc=TRUE, adaptive=c(FALSE,TRUE), aini=NULL, isd=FALSE, ifast=TRUE, keep.beta=FALSE, thresh=1e-7, maxit=1e+5){
   
   penalty=ifelse(alpha==1,"Lasso","Net")
   
@@ -247,12 +246,10 @@ coxNet=function(x, y, Omega=NULL, alpha=1, lambda=NULL, nlambda=50, rlambda=NULL
   ifast=as.integer(ifast)
   
   ### scaleC and standardized
-  xscale=rep(1, p)
-  if (isd) {
-    tem=scaleC(x)
-    xscale=tem$sd;x=tem$x
-    rm(tem)
-  }
+  tem=scaleC(x)
+  xscale=tem$sd; x=tem$x
+  rm(tem)
+ 
   
   ###  Full data  ###
   prep0=coxprep(x, y)
@@ -260,7 +257,7 @@ coxNet=function(x, y, Omega=NULL, alpha=1, lambda=NULL, nlambda=50, rlambda=NULL
   ### Adaptive based on Ridge (L2)
   if (any(adaptive)>0) {
     if (is.null(aini)) 
-      aini=coxini(x, y, alambda, nalambda, rlambda, isd)
+      aini=coxini(x, y)
     if (adaptive[1] & !adaptive[2]) {
       wbeta=aini$wbeta;sgn=rep(1, p)
     } else if (!adaptive[1] & adaptive[2]) {
@@ -296,7 +293,8 @@ coxNet=function(x, y, Omega=NULL, alpha=1, lambda=NULL, nlambda=50, rlambda=NULL
   if (nlambdai==0) 
     return(NULL)
   lambdai=lambda[1:nlambdai]
-  out$Beta=Matrix(out$Beta[, 1:nlambdai]/xscale, sparse=TRUE)
+  #out$Beta=Matrix(out$Beta[, 1:nlambdai]/xscale, sparse=TRUE)
+  if (!isd) out$Beta=matrix(out$Beta[, 1:nlambdai]/xscale, ncol=nlambdai)
   out$nzero=apply(out$Beta!=0, 2, sum)
   out$flag=out$flag[1:nlambdai]
   
@@ -337,15 +335,16 @@ coxNet=function(x, y, Omega=NULL, alpha=1, lambda=NULL, nlambda=50, rlambda=NULL
     indexi=which.max(cvm)
     indexij=which(cvm>=(cvm[indexi]-cvse[indexi]))[1]
     temi=rep("", nlambdai)
-    temi[indexi]="**";temi[indexij]=ifelse(temi[indexij]=="", "*", "***")
+    temi[indexi]="max"
+    #temi[indexi]="**";temi[indexij]=ifelse(temi[indexij]=="", "*", "***")
     temCV=data.frame(lambda=lambdai, cvm=cvm, cvse=cvse, nzero=out$nzero, index=temi,stringsAsFactors=FALSE)
     
     if (!itrunc) {
       rm(outi)
       if (!keep.beta) {
-        return(list(Beta=out$Beta[, c(indexij, indexi)], fit=temCV, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], penalty=penalty, adaptive=adaptive, flag=out$flag))
+        return(list(Beta=out$Beta[, indexi], fit=temCV, lambda.max=lambdai[indexi], penalty=penalty, adaptive=adaptive, flag=out$flag))
       } else {
-        return(list(Beta=out$Beta, fit=temCV, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], penalty=penalty, adaptive=adaptive, flag=out$flag))
+        return(list(Beta=out$Beta, fit=temCV, lambda.max=lambdai[indexi], penalty=penalty, adaptive=adaptive, flag=out$flag))
       }
     }
     
@@ -436,11 +435,13 @@ coxNet=function(x, y, Omega=NULL, alpha=1, lambda=NULL, nlambda=50, rlambda=NULL
     temCV0=data.frame(lambda=lambdai[index0],cvm=cv.max[index0],nzero=cuti)
     
     if (!keep.beta) {
-      return(list(Beta=out$Beta[, c(indexij, indexi)], Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
+      return(list(Beta=out$Beta[, indexi], Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
     } else {
-      return(list(Beta=out$Beta, Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.1se=lambdai[indexij], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
+      return(list(Beta=out$Beta, Beta0=Beta0, fit=temCV, fit0=temCV0, lambda.max=lambdai[indexi], lambda.opt=lambdai[index0], cv.nzero=cvm[[index0]], penalty=penalty, adaptive=adaptive, flag=out$flag))
     }
   }
 }
+
+
 
 

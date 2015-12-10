@@ -5,7 +5,9 @@
 Regularized Cox Model
 }
 \description{
-This package fits Cox model regularized with net (L1 and Laplacian), elastic-net (L1 and L2) or lasso (L1) penalty. In addition, it can truncate the estimate by a hard threshold, which is selected simultaneously with other tuning parameters. Moreover, it can handle the adaptive version of these regularization forms, such as adaptive lasso and net adjusting for signs of linked coefficients.
+This package fits a Cox model regularized with net (L1 and Laplacian), elastic-net (L1 and L2) or lasso (L1) penalty, and their adaptive forms, such as adaptive lasso and net adjusting for signs of linked coefficients. Moreover, it treats the number of non-zero coefficients as another tuning parameter and simultaneously selects with the regularization parameter \code{lambda}.
+
+In addition, it fits a varying coefficient Cox model by kernel smoothing, incorporated with the aforementioned penalties.
 
 The package uses one-step coordinate descent algorithm and runs extremely fast by taking into account the sparsity structure of coefficients.
 }
@@ -13,12 +15,12 @@ The package uses one-step coordinate descent algorithm and runs extremely fast b
 \tabular{ll}{
 Package: \tab Coxnet\cr
 Type: \tab Package\cr
-Version: \tab 0.1-1\cr
-Date: \tab 2015-03-21\cr
+Version: \tab 0.2\cr
+Date: \tab 2015-12-09\cr
 License: \tab GPL (>= 2)\cr
 }
-Two functions:
-\code{\link{Coxnet}}, \code{\link{print.Coxnet}}, \code{\link{coxsplit}}\cr
+Functions:
+\code{\link{Coxnet}}, \code{\link{loCoxnet}}, \code{\link{print.Coxnet}}, \code{\link{coxsplit}}\cr
 }
 \author{
 Xiang Li, Donglin Zeng and Yuanjia Wang\cr
@@ -35,7 +37,10 @@ Maintainer: Xiang Li <xl2473@columbia.edu>
   \url{http://www.jstatsoft.org/v39/i05/}\cr
   Sun, H., Lin, W., Feng, R., and Li, H. (2014)
   \emph{Network-regularized high-dimensional cox regression for analysis of genomic data, Statistica Sinica.}\cr
-  \url{http://www3.stat.sinica.edu.tw/statistica/j24n3/j24n319/j24n319.html}
+  \url{http://www3.stat.sinica.edu.tw/statistica/j24n3/j24n319/j24n319.html}\cr
+  van Houwelingen, H. C., Bruinsma, T., Hart, A. A., van't Veer, L. J., & Wessels, L. F. (2006)
+  \emph{Cross-validated Cox regression on microarray gene expression data. Statistics in medicine, 25(18), 3201-3216.}\cr
+  \url{http://onlinelibrary.wiley.com/doi/10.1002/sim.2353/full}\cr
 }
 
 \keyword{Cox model}
@@ -52,4 +57,5 @@ tcens=rbinom(n=N,prob=.3,size=1)  # censoring indicator
 y=cbind(time=ty,status=1-tcens)
 fiti=Coxnet(x,y,penalty="Lasso")  # Lasso
 }
+
 

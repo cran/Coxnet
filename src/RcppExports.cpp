@@ -39,6 +39,37 @@ RcppExport SEXP Coxnet_scaleC(SEXP XSEXP) {
     UNPROTECT(1);
     return __result;
 }
+// softC
+double softC(double z, double lambda);
+static SEXP Coxnet_softC_try(SEXP zSEXP, SEXP lambdaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< double >::type z(zSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    __result = Rcpp::wrap(softC(z, lambda));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_softC(SEXP zSEXP, SEXP lambdaSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_softC_try(zSEXP, lambdaSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
 // OmegaC
 List OmegaC(Eigen::MatrixXd& Omega, Eigen::VectorXi& sgn);
 static SEXP Coxnet_OmegaC_try(SEXP OmegaSEXP, SEXP sgnSEXP) {
@@ -422,12 +453,409 @@ RcppExport SEXP Coxnet_cvcoxnetC(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SE
     UNPROTECT(1);
     return __result;
 }
+// max_loclambdaC
+double max_loclambdaC(Eigen::MatrixXd X, Eigen::VectorXd tevent, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, double alpha, Eigen::VectorXd wbeta, int N0);
+static SEXP Coxnet_max_loclambdaC_try(SEXP XSEXP, SEXP teventSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP alphaSEXP, SEXP wbetaSEXP, SEXP N0SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type tevent(teventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh1(Kh1SEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type wbeta(wbetaSEXP);
+    Rcpp::traits::input_parameter< int >::type N0(N0SEXP);
+    __result = Rcpp::wrap(max_loclambdaC(X, tevent, Kh, Kh1, N, nevent, nevent1, loc1, n, alpha, wbeta, N0));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_max_loclambdaC(SEXP XSEXP, SEXP teventSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP alphaSEXP, SEXP wbetaSEXP, SEXP N0SEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_max_loclambdaC_try(XSEXP, teventSEXP, KhSEXP, Kh1SEXP, NSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP, alphaSEXP, wbetaSEXP, N0SEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// alocletaC
+Eigen::MatrixXd alocletaC(Eigen::ArrayXd eta, Eigen::VectorXd tevent, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n);
+static SEXP Coxnet_alocletaC_try(SEXP etaSEXP, SEXP teventSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::ArrayXd >::type eta(etaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type tevent(teventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh1(Kh1SEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    __result = Rcpp::wrap(alocletaC(eta, tevent, Kh, Kh1, N, nevent, nevent1, loc1, n));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_alocletaC(SEXP etaSEXP, SEXP teventSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_alocletaC_try(etaSEXP, teventSEXP, KhSEXP, Kh1SEXP, NSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// locletaC
+double locletaC(Eigen::ArrayXd eta, Eigen::VectorXd Kh, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n);
+static SEXP Coxnet_locletaC_try(SEXP etaSEXP, SEXP KhSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::ArrayXd >::type eta(etaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    __result = Rcpp::wrap(locletaC(eta, Kh, nevent, nevent1, loc1, n));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_locletaC(SEXP etaSEXP, SEXP KhSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_locletaC_try(etaSEXP, KhSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// loceobjF
+double loceobjF(Eigen::VectorXd beta, Eigen::ArrayXd eta, Eigen::VectorXd lambda1, double lambda2, Eigen::VectorXd Kh, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int N0);
+static SEXP Coxnet_loceobjF_try(SEXP betaSEXP, SEXP etaSEXP, SEXP lambda1SEXP, SEXP lambda2SEXP, SEXP KhSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP N0SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< Eigen::ArrayXd >::type eta(etaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type lambda1(lambda1SEXP);
+    Rcpp::traits::input_parameter< double >::type lambda2(lambda2SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type N0(N0SEXP);
+    __result = Rcpp::wrap(loceobjF(beta, eta, lambda1, lambda2, Kh, nevent, nevent1, loc1, n, N0));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_loceobjF(SEXP betaSEXP, SEXP etaSEXP, SEXP lambda1SEXP, SEXP lambda2SEXP, SEXP KhSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP N0SEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_loceobjF_try(betaSEXP, etaSEXP, lambda1SEXP, lambda2SEXP, KhSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP, N0SEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// loclbetaC
+double loclbetaC(Eigen::VectorXd beta, Eigen::MatrixXd X, Eigen::VectorXd Kh, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n);
+static SEXP Coxnet_loclbetaC_try(SEXP betaSEXP, SEXP XSEXP, SEXP KhSEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    __result = Rcpp::wrap(loclbetaC(beta, X, Kh, N, nevent, nevent1, loc1, n));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_loclbetaC(SEXP betaSEXP, SEXP XSEXP, SEXP KhSEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_loclbetaC_try(betaSEXP, XSEXP, KhSEXP, NSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// locoxenetC
+List locoxenetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit);
+static SEXP Coxnet_locoxenetC_try(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type tevent(teventSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< int >::type nlambda(nlambdaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type wbeta(wbetaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh1(Kh1SEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type N0(N0SEXP);
+    Rcpp::traits::input_parameter< double >::type thresh(threshSEXP);
+    Rcpp::traits::input_parameter< double >::type thresh2(thresh2SEXP);
+    Rcpp::traits::input_parameter< int >::type maxit(maxitSEXP);
+    __result = Rcpp::wrap(locoxenetC(X, tevent, alpha, lambda, nlambda, wbeta, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_locoxenetC(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_locoxenetC_try(XSEXP, teventSEXP, alphaSEXP, lambdaSEXP, nlambdaSEXP, wbetaSEXP, KhSEXP, Kh1SEXP, NSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP, pSEXP, N0SEXP, threshSEXP, thresh2SEXP, maxitSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// cvlocoxenetC
+List cvlocoxenetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit, Eigen::MatrixXd XF, Eigen::VectorXd KhF, int NF, Eigen::VectorXi neventF, Eigen::VectorXi nevent1F, Eigen::VectorXi loc1F, int nF);
+static SEXP Coxnet_cvlocoxenetC_try(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP, SEXP XFSEXP, SEXP KhFSEXP, SEXP NFSEXP, SEXP neventFSEXP, SEXP nevent1FSEXP, SEXP loc1FSEXP, SEXP nFSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type tevent(teventSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< int >::type nlambda(nlambdaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type wbeta(wbetaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh1(Kh1SEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type N0(N0SEXP);
+    Rcpp::traits::input_parameter< double >::type thresh(threshSEXP);
+    Rcpp::traits::input_parameter< double >::type thresh2(thresh2SEXP);
+    Rcpp::traits::input_parameter< int >::type maxit(maxitSEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type XF(XFSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type KhF(KhFSEXP);
+    Rcpp::traits::input_parameter< int >::type NF(NFSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type neventF(neventFSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1F(nevent1FSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1F(loc1FSEXP);
+    Rcpp::traits::input_parameter< int >::type nF(nFSEXP);
+    __result = Rcpp::wrap(cvlocoxenetC(X, tevent, alpha, lambda, nlambda, wbeta, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit, XF, KhF, NF, neventF, nevent1F, loc1F, nF));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_cvlocoxenetC(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP, SEXP XFSEXP, SEXP KhFSEXP, SEXP NFSEXP, SEXP neventFSEXP, SEXP nevent1FSEXP, SEXP loc1FSEXP, SEXP nFSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_cvlocoxenetC_try(XSEXP, teventSEXP, alphaSEXP, lambdaSEXP, nlambdaSEXP, wbetaSEXP, KhSEXP, Kh1SEXP, NSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP, pSEXP, N0SEXP, threshSEXP, thresh2SEXP, maxitSEXP, XFSEXP, KhFSEXP, NFSEXP, neventFSEXP, nevent1FSEXP, loc1FSEXP, nFSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// locoxnetC
+List locoxnetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::MatrixXd L, Eigen::MatrixXd Omega, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit);
+static SEXP Coxnet_locoxnetC_try(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP LSEXP, SEXP OmegaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type tevent(teventSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< int >::type nlambda(nlambdaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type wbeta(wbetaSEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type L(LSEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type Omega(OmegaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh1(Kh1SEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type N0(N0SEXP);
+    Rcpp::traits::input_parameter< double >::type thresh(threshSEXP);
+    Rcpp::traits::input_parameter< double >::type thresh2(thresh2SEXP);
+    Rcpp::traits::input_parameter< int >::type maxit(maxitSEXP);
+    __result = Rcpp::wrap(locoxnetC(X, tevent, alpha, lambda, nlambda, wbeta, L, Omega, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_locoxnetC(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP LSEXP, SEXP OmegaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_locoxnetC_try(XSEXP, teventSEXP, alphaSEXP, lambdaSEXP, nlambdaSEXP, wbetaSEXP, LSEXP, OmegaSEXP, KhSEXP, Kh1SEXP, NSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP, pSEXP, N0SEXP, threshSEXP, thresh2SEXP, maxitSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
+// cvlocoxnetC
+List cvlocoxnetC(Eigen::MatrixXd X, Eigen::VectorXd tevent, double alpha, Eigen::VectorXd lambda, int nlambda, Eigen::VectorXd wbeta, Eigen::MatrixXd L, Eigen::MatrixXd Omega, Eigen::VectorXd Kh, Eigen::VectorXd Kh1, int N, Eigen::VectorXi nevent, Eigen::VectorXi nevent1, Eigen::VectorXi loc1, int n, int p, int N0, double thresh, double thresh2, int maxit, Eigen::MatrixXd XF, Eigen::VectorXd KhF, int NF, Eigen::VectorXi neventF, Eigen::VectorXi nevent1F, Eigen::VectorXi loc1F, int nF);
+static SEXP Coxnet_cvlocoxnetC_try(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP LSEXP, SEXP OmegaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP, SEXP XFSEXP, SEXP KhFSEXP, SEXP NFSEXP, SEXP neventFSEXP, SEXP nevent1FSEXP, SEXP loc1FSEXP, SEXP nFSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type tevent(teventSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< int >::type nlambda(nlambdaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type wbeta(wbetaSEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type L(LSEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type Omega(OmegaSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh(KhSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type Kh1(Kh1SEXP);
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent(neventSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1(nevent1SEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1(loc1SEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type N0(N0SEXP);
+    Rcpp::traits::input_parameter< double >::type thresh(threshSEXP);
+    Rcpp::traits::input_parameter< double >::type thresh2(thresh2SEXP);
+    Rcpp::traits::input_parameter< int >::type maxit(maxitSEXP);
+    Rcpp::traits::input_parameter< Eigen::MatrixXd >::type XF(XFSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXd >::type KhF(KhFSEXP);
+    Rcpp::traits::input_parameter< int >::type NF(NFSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type neventF(neventFSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type nevent1F(nevent1FSEXP);
+    Rcpp::traits::input_parameter< Eigen::VectorXi >::type loc1F(loc1FSEXP);
+    Rcpp::traits::input_parameter< int >::type nF(nFSEXP);
+    __result = Rcpp::wrap(cvlocoxnetC(X, tevent, alpha, lambda, nlambda, wbeta, L, Omega, Kh, Kh1, N, nevent, nevent1, loc1, n, p, N0, thresh, thresh2, maxit, XF, KhF, NF, neventF, nevent1F, loc1F, nF));
+    return __result;
+END_RCPP_RETURN_ERROR
+}
+RcppExport SEXP Coxnet_cvlocoxnetC(SEXP XSEXP, SEXP teventSEXP, SEXP alphaSEXP, SEXP lambdaSEXP, SEXP nlambdaSEXP, SEXP wbetaSEXP, SEXP LSEXP, SEXP OmegaSEXP, SEXP KhSEXP, SEXP Kh1SEXP, SEXP NSEXP, SEXP neventSEXP, SEXP nevent1SEXP, SEXP loc1SEXP, SEXP nSEXP, SEXP pSEXP, SEXP N0SEXP, SEXP threshSEXP, SEXP thresh2SEXP, SEXP maxitSEXP, SEXP XFSEXP, SEXP KhFSEXP, SEXP NFSEXP, SEXP neventFSEXP, SEXP nevent1FSEXP, SEXP loc1FSEXP, SEXP nFSEXP) {
+    SEXP __result;
+    {
+        Rcpp::RNGScope __rngScope;
+        __result = PROTECT(Coxnet_cvlocoxnetC_try(XSEXP, teventSEXP, alphaSEXP, lambdaSEXP, nlambdaSEXP, wbetaSEXP, LSEXP, OmegaSEXP, KhSEXP, Kh1SEXP, NSEXP, neventSEXP, nevent1SEXP, loc1SEXP, nSEXP, pSEXP, N0SEXP, threshSEXP, thresh2SEXP, maxitSEXP, XFSEXP, KhFSEXP, NFSEXP, neventFSEXP, nevent1FSEXP, loc1FSEXP, nFSEXP));
+    }
+    Rboolean __isInterrupt = Rf_inherits(__result, "interrupted-error");
+    if (__isInterrupt) {
+        UNPROTECT(1);
+        Rf_onintr();
+    }
+    Rboolean __isError = Rf_inherits(__result, "try-error");
+    if (__isError) {
+        SEXP __msgSEXP = Rf_asChar(__result);
+        UNPROTECT(1);
+        Rf_error(CHAR(__msgSEXP));
+    }
+    UNPROTECT(1);
+    return __result;
+}
 
 // validate (ensure exported C++ functions exist before calling them)
 static int Coxnet_RcppExport_validate(const char* sig) { 
     static std::set<std::string> signatures;
     if (signatures.empty()) {
         signatures.insert("List(*scaleC)(Eigen::MatrixXd)");
+        signatures.insert("double(*softC)(double,double)");
         signatures.insert("List(*OmegaC)(Eigen::MatrixXd&,Eigen::VectorXi&)");
         signatures.insert("List(*OmegaSC)(Eigen::SparseMatrix<double>&,Eigen::VectorXi&)");
         signatures.insert("double(*max_lambdaC)(Eigen::MatrixXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,double,Eigen::VectorXd,int)");
@@ -437,6 +865,15 @@ static int Coxnet_RcppExport_validate(const char* sig) {
         signatures.insert("List(*cvcoxenetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,int,int,Eigen::MatrixXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
         signatures.insert("List(*coxnetC)(Eigen::MatrixXd&,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::SparseMatrix<double>&,Eigen::MatrixXd,Eigen::VectorXi,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,int,int)");
         signatures.insert("List(*cvcoxnetC)(Eigen::MatrixXd&,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::SparseMatrix<double>&,Eigen::MatrixXd,Eigen::VectorXi,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,int,int,Eigen::MatrixXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+        signatures.insert("double(*max_loclambdaC)(Eigen::MatrixXd,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,double,Eigen::VectorXd,int)");
+        signatures.insert("Eigen::MatrixXd(*alocletaC)(Eigen::ArrayXd,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+        signatures.insert("double(*locletaC)(Eigen::ArrayXd,Eigen::VectorXd,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+        signatures.insert("double(*loceobjF)(Eigen::VectorXd,Eigen::ArrayXd,Eigen::VectorXd,double,Eigen::VectorXd,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int)");
+        signatures.insert("double(*loclbetaC)(Eigen::VectorXd,Eigen::MatrixXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+        signatures.insert("List(*locoxenetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int)");
+        signatures.insert("List(*cvlocoxenetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int,Eigen::MatrixXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
+        signatures.insert("List(*locoxnetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::MatrixXd,Eigen::MatrixXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int)");
+        signatures.insert("List(*cvlocoxnetC)(Eigen::MatrixXd,Eigen::VectorXd,double,Eigen::VectorXd,int,Eigen::VectorXd,Eigen::MatrixXd,Eigen::MatrixXd,Eigen::VectorXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int,int,int,double,double,int,Eigen::MatrixXd,Eigen::VectorXd,int,Eigen::VectorXi,Eigen::VectorXi,Eigen::VectorXi,int)");
     }
     return signatures.find(sig) != signatures.end();
 }
@@ -444,6 +881,7 @@ static int Coxnet_RcppExport_validate(const char* sig) {
 // registerCCallable (register entry points for exported C++ functions)
 RcppExport SEXP Coxnet_RcppExport_registerCCallable() { 
     R_RegisterCCallable("Coxnet", "Coxnet_scaleC", (DL_FUNC)Coxnet_scaleC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_softC", (DL_FUNC)Coxnet_softC_try);
     R_RegisterCCallable("Coxnet", "Coxnet_OmegaC", (DL_FUNC)Coxnet_OmegaC_try);
     R_RegisterCCallable("Coxnet", "Coxnet_OmegaSC", (DL_FUNC)Coxnet_OmegaSC_try);
     R_RegisterCCallable("Coxnet", "Coxnet_max_lambdaC", (DL_FUNC)Coxnet_max_lambdaC_try);
@@ -453,6 +891,15 @@ RcppExport SEXP Coxnet_RcppExport_registerCCallable() {
     R_RegisterCCallable("Coxnet", "Coxnet_cvcoxenetC", (DL_FUNC)Coxnet_cvcoxenetC_try);
     R_RegisterCCallable("Coxnet", "Coxnet_coxnetC", (DL_FUNC)Coxnet_coxnetC_try);
     R_RegisterCCallable("Coxnet", "Coxnet_cvcoxnetC", (DL_FUNC)Coxnet_cvcoxnetC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_max_loclambdaC", (DL_FUNC)Coxnet_max_loclambdaC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_alocletaC", (DL_FUNC)Coxnet_alocletaC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_locletaC", (DL_FUNC)Coxnet_locletaC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_loceobjF", (DL_FUNC)Coxnet_loceobjF_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_loclbetaC", (DL_FUNC)Coxnet_loclbetaC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_locoxenetC", (DL_FUNC)Coxnet_locoxenetC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_cvlocoxenetC", (DL_FUNC)Coxnet_cvlocoxenetC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_locoxnetC", (DL_FUNC)Coxnet_locoxnetC_try);
+    R_RegisterCCallable("Coxnet", "Coxnet_cvlocoxnetC", (DL_FUNC)Coxnet_cvlocoxnetC_try);
     R_RegisterCCallable("Coxnet", "Coxnet_RcppExport_validate", (DL_FUNC)Coxnet_RcppExport_validate);
     return R_NilValue;
 }

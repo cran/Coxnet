@@ -18,7 +18,7 @@ Print a summary of results along the path of \code{lambda}.
 }
 }
 \details{
-The penalty and whether adaptive is performed is printed, followed by \code{fit} and then \code{fit0} (if any), from fitted Coxnet object.
+The performed model is printed, followed by \code{fit} and \code{fit0} (if any) from a fitted \code{Coxnet} object, or \code{fit} and \code{cvh} (if any) from a fitted \code{loCoxnet} object
 }
 \value{
 The matrix above is silently returned
@@ -31,7 +31,7 @@ Maintainer: Xiang Li <xl2473@columbia.edu>
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{Coxnet}}, \code{\link{coxsplit}}
+\code{\link{Coxnet}}, \code{\link{loCoxnet}}, \code{\link{coxsplit}}
 }
 \examples{
 set.seed(1213)
